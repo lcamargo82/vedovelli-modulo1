@@ -1,4 +1,4 @@
-const { queryString, parse } = require('./queryString');
+import { queryString, parse } from './queryString';
 
 //Agrupa casos de testes dentro de uma mesma test suite utilizando describe
 describe('Object to query string', () => {
