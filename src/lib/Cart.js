@@ -26,7 +26,18 @@ export default class Cart {
 
   getTotal() {
     return this.items.reduce((acc, item) => {
-      return acc.add(Money({ amount: item.quantity * item.product.price }));
+      const amount = Money({ amount: item.quantity * item.product.price });
+      let discount = Money({ amount: 0 });
+
+      if (
+        item.condition &&
+        item.condition.percentage &&
+        item.quantity > item.condition.minimum
+      ) {
+        discount = amount.percentage(item.condition.percentage);
+      }
+
+      return acc.add(amount).subtract(discount);
     }, Money({ amount: 0 }) /*0*/); /*valor inicial será 0, o primeiro parametro do reduce como metodo de callback é exatamente o 0, 
            também chamado de acumulator (acc)*/
   }
